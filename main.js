@@ -87,6 +87,10 @@ function draw() {
   gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, gl.FALSE, Float32Array.BYTES_PER_ELEMENT * 2, 0);
   gl.enableVertexAttribArray(positionLocation);
 
+  let sinAnim = Math.sin(Date.now() / 1000);
+  let sinAnimLoc = gl.getUniformLocation(shader, "SinAnim");
+  gl.uniform1f(sinAnimLoc, sinAnim);
+
   gl.drawArrays(gl.TRIANGLES, 0, screenQuadGeometry.length / 2);
 };
 
@@ -109,6 +113,8 @@ function resizeCallback() {
 
   let dimensionsLoc = gl.getUniformLocation(shader, "Dimensions");
   gl.uniform2f(dimensionsLoc, canvas.width, canvas.height);
+  let ratioLoc = gl.getUniformLocation(shader, "Ratio");
+  gl.uniform1f(ratioLoc, (canvas.width / canvas.height));
 }
 
 // register init() for execution when the content of the HTML file is ready
