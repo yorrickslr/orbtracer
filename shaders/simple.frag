@@ -77,12 +77,18 @@ void main(void) {
   direction = normalize(direction);
 
   Ray eyeRay = Ray(vec3(0.0, 0.0, 0.0), direction);
-  Sphere outerSphere = Sphere(vec3(0.0, 0.0, -3.0), 1.0);
+  Sphere outerSphere = Sphere(vec3(0.0, (SinAnim * sin(SinAnim)) * 0.05, -3.0), 1.0);
   highp vec3 intersection;
 
   if(intersect(outerSphere, eyeRay, intersection)) {
-    outColor = vec4(0.5, 0.5, 0.5, 1.0);
+    lowp vec3 color = vec3(SinAnim * 0.7, 0.2, 0.1);
+    highp vec3 light_pos = vec3(SinAnim, -SinAnim * 3.0, -1.0);
+    highp vec3 normal = normalize(intersection - outerSphere.pos);
+    highp vec3 light_angle = normalize(light_pos - intersection);
+    lowp float brightness = dot(light_angle, normal);
+
+    outColor = vec4(color * brightness, 1.0);
   } else {
-    outColor = vec4(0.0, 0.0, 0.0, 1.0);
+    outColor = vec4(0.0, 0.0, cos(SinAnim) * 0.1, 1.0);
   }
 }

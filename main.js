@@ -24,7 +24,7 @@ async function init() {
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
   await initShaders();
-  await initGeometry();
+  initGeometry();
 
   // initial resize of canvas and viewport
   resizeCallback();
@@ -53,7 +53,7 @@ async function initShaders() {
 // loadObj returns a PROMISE whose result we have to AWAIT
 // in order to upload the geometry; therefore the function is
 // declared as ASYNC
-async function initGeometry() {
+function initGeometry() {
   gl.useProgram(shader);
 
   screenQuadGeometry = new Float32Array([
